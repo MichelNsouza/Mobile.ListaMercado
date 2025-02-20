@@ -1,7 +1,7 @@
 export default interface Produto {
-  id: string;
+  id: string; 
   nome: string;
-  categoria: string;
   quantidade: number;
-  preco: number;
+  valor: number;
+  marcado: boolean;
 }

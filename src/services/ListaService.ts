@@ -9,7 +9,6 @@ export interface Lista {
   produtos: Produto[];
 }
 
-// Salvar todas as listas no AsyncStorage
 export const salvarListas = async (listas: Lista[]): Promise<void> => {
   try {
     await AsyncStorage.setItem('listas', JSON.stringify(listas));
@@ -18,7 +17,6 @@ export const salvarListas = async (listas: Lista[]): Promise<void> => {
   }
 };
 
-// Carregar todas as listas
 export const carregarListas = async (): Promise<Lista[]> => {
   try {
     const listasSalvas = await AsyncStorage.getItem('listas');
@@ -46,14 +44,13 @@ export const adicionarLista = async (nome: string, dataCriacao: Date, produtos: 
   return listas;
 };
 
-// Adicionar um produto a uma lista existente
 export const adicionarProduto = async (listaId: string, produto: Produto): Promise<Lista[]> => {
   const listas = await carregarListas();
   const index = listas.findIndex(lista => lista.id === listaId);
 
   if (index !== -1) {
-    listas[index].produtos.push(produto);
-    await salvarListas(listas);
+    listas[index].produtos.push(produto); // Adicionando o produto na lista
+    await salvarListas(listas); // Salvando no AsyncStorage
   }
 
   return listas;
@@ -72,7 +69,6 @@ export const removerProduto = async (listaId: string, produtoId: string): Promis
   return listas;
 };
 
-// Atualizar a quantidade de um produto (+ ou -)
 export const atualizarQuantidade = async (listaId: string, produtoId: string, incremento: number): Promise<Lista[]> => {
   const listas = await carregarListas();
   const listaIndex = listas.findIndex(lista => lista.id === listaId);
